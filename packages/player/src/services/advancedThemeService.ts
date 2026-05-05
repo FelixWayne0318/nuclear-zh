@@ -1,6 +1,7 @@
 import { BaseDirectory, readTextFile } from '@tauri-apps/plugin-fs';
 import { toast } from 'sonner';
 
+import { i18n } from '@nuclearplayer/i18n';
 import {
   applyAdvancedTheme,
   parseAdvancedTheme,
@@ -49,7 +50,7 @@ export const applyAdvancedThemeFromSettingsIfAny = async (): Promise<void> => {
     setThemeId('');
     await loadAndApplyAdvancedThemeFromFile(path);
   } catch (error) {
-    toast.error("Couldn't load advanced theme", {
+    toast.error(i18n.t('themes.advancedLoadError'), {
       description: error instanceof Error ? error.message : String(error),
     });
   }

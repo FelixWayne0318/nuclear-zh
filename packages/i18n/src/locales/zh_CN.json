@@ -22,7 +22,8 @@
     },
     "errors": {
       "network": "网络错误，请检查网络连接。",
-      "notFound": "未找到"
+      "notFound": "未找到",
+      "unknown": "未知错误"
     }
   },
   "navigation": {
@@ -175,6 +176,7 @@
     "default": "默认",
     "selectPlaceholder": "选择主题",
     "description": "应用数据 themes 目录中检测到的主题",
+    "advancedLoadError": "加载高级主题失败",
     "tabs": {
       "myThemes": "我的主题",
       "store": "商店"
@@ -253,13 +255,22 @@
       "installError": {
         "title": "安装 {{name}} 失败"
       }
+    },
+    "errors": {
+      "load": "加载插件失败",
+      "reload": "重载插件失败",
+      "remove": "移除插件失败",
+      "unknownPermissions": "未知权限：{{permissions}}"
     }
   },
   "updater": {
     "updateAvailable": "有可用更新",
     "clickToUpdate": "点击更新",
     "downloading": "下载中… {{progress}}%",
-    "clickToRestart": "点击重启"
+    "clickToRestart": "点击重启",
+    "errors": {
+      "restart": "重启以安装更新失败"
+    }
   },
   "flatpak": {
     "sandboxWarning": "你正在 Flatpak 沙盒中运行 Nuclear。部分功能可能无法正常工作。如遇问题，建议改用 .deb 或 AppImage 版本。",
@@ -407,6 +418,12 @@
       "noCandidatesFound": "未找到可用音源",
       "allCandidatesFailed": "所有音源均播放失败"
     }
+  },
+  "discord": {
+    "reconnected": "已重新连接到 Discord"
+  },
+  "tracks": {
+    "filterPlaceholder": "筛选歌曲"
   },
   "playerBar": {
     "noTrackPlaying": "未在播放",

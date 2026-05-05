@@ -24,6 +24,7 @@ export const defaultTrackTableLabels: TrackTableLabels = {
   dragHandleLabel: 'Drag to reorder',
   playAll: 'Play all',
   addAllToQueue: 'Add all to queue',
+  filterPlaceholder: 'Filter tracks',
 };
 
 export function mergeLabels(

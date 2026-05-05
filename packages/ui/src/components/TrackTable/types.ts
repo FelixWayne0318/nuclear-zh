@@ -24,6 +24,7 @@ export interface TrackTableLabels {
   dragHandleLabel: string;
   playAll: string;
   addAllToQueue: string;
+  filterPlaceholder: string;
 }
 
 export type TrackTableClasses = {

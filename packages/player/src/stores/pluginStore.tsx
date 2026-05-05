@@ -1,6 +1,7 @@
 import { produce } from 'immer';
 import { create } from 'zustand';
 
+import { i18n } from '@nuclearplayer/i18n';
 import type { NuclearPlugin, PluginMetadata } from '@nuclearplayer/plugin-sdk';
 import { NuclearPluginAPI } from '@nuclearplayer/plugin-sdk';
 
@@ -79,7 +80,11 @@ const loadPluginData = async (
     (p) => !allowedPermissions.includes(p),
   );
   const warnings: string[] = unknownPermissions.length
-    ? [`Unknown permissions: ${unknownPermissions.join(', ')}`]
+    ? [
+        i18n.t('plugins.errors.unknownPermissions', {
+          permissions: unknownPermissions.join(', '),
+        }),
+      ]
     : [];
 
   if (warnings.length > 0) {
@@ -172,7 +177,7 @@ export const usePluginStore = create<PluginStore>((set, get) => ({
       }
     } catch (error) {
       await reportError('plugins', {
-        userMessage: 'Failed to load plugin',
+        userMessage: i18n.t('plugins.errors.load'),
         error,
       });
     }
@@ -374,7 +379,7 @@ export const usePluginStore = create<PluginStore>((set, get) => ({
         }),
       );
       await reportError('plugins', {
-        userMessage: 'Failed to reload plugin',
+        userMessage: i18n.t('plugins.errors.reload'),
         error,
       });
       throw error;
@@ -399,7 +404,7 @@ export const usePluginStore = create<PluginStore>((set, get) => ({
       Logger.plugins.info(`Plugin ${id} removed successfully`);
     } catch (error) {
       await reportError('plugins', {
-        userMessage: 'Failed to remove plugin',
+        userMessage: i18n.t('plugins.errors.remove'),
         error,
       });
       throw error;

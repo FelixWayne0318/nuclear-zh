@@ -2,6 +2,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { toast } from 'sonner';
 
 import type { SoundStatus } from '@nuclearplayer/hifi';
+import { i18n } from '@nuclearplayer/i18n';
 import { formatArtistNames, type Track } from '@nuclearplayer/model';
 
 import { useQueueStore } from '../stores/queueStore';
@@ -26,7 +27,7 @@ const disconnect = () => invoke('discord_disconnect');
 const setActivity = async (track: TrackPresence) => {
   const reconnected = await invoke<boolean>('discord_set_activity', { track });
   if (reconnected) {
-    toast.info('Reconnected to Discord');
+    toast.info(i18n.t('discord.reconnected'));
   }
 };
 const clearActivity = () => invoke<boolean>('discord_clear_activity');

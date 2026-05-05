@@ -2,6 +2,8 @@ import isError from 'lodash-es/isError';
 import isString from 'lodash-es/isString';
 import { toast } from 'sonner';
 
+import { i18n } from '@nuclearplayer/i18n';
+
 import { formatLogValue, Logger, LogScope } from '../services/logger';
 
 export const resolveErrorMessage = (error: unknown): string => {
@@ -11,7 +13,7 @@ export const resolveErrorMessage = (error: unknown): string => {
   if (isString(error)) {
     return error;
   }
-  return 'Unknown error';
+  return i18n.t('common.errors.unknown');
 };
 
 const TOAST_MAX_LENGTH = 100;

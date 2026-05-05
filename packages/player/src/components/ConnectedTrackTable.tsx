@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { useTranslation } from '@nuclearplayer/i18n';
 import type { Track } from '@nuclearplayer/model';
 import {
   TrackTable,
@@ -19,9 +20,14 @@ type ConnectedTrackTableProps = Omit<
 };
 
 export const ConnectedTrackTable: FC<ConnectedTrackTableProps> = (props) => {
-  const { actions: externalActions, ...restProps } = props;
+  const {
+    actions: externalActions,
+    labels: externalLabels,
+    ...restProps
+  } = props;
   const trackActions = useTrackActions();
   const queueActions = useQueueActions();
+  const { t } = useTranslation();
 
   return (
     <TrackTable
@@ -29,6 +35,10 @@ export const ConnectedTrackTable: FC<ConnectedTrackTableProps> = (props) => {
       display={{
         displayFavorite: true,
         ...restProps.display,
+      }}
+      labels={{
+        filterPlaceholder: t('tracks.filterPlaceholder'),
+        ...externalLabels,
       }}
       actions={{
         onAddToQueue: trackActions.addToQueue,

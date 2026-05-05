@@ -22,7 +22,8 @@
     },
     "errors": {
       "network": "Network error. Please check your connection.",
-      "notFound": "Not found"
+      "notFound": "Not found",
+      "unknown": "Unknown error"
     }
   },
   "navigation": {
@@ -175,6 +176,7 @@
     "default": "Default",
     "selectPlaceholder": "Select a theme",
     "description": "Themes found in your app data themes directory",
+    "advancedLoadError": "Couldn't load advanced theme",
     "tabs": {
       "myThemes": "My themes",
       "store": "Store"
@@ -253,13 +255,22 @@
       "installError": {
         "title": "Failed to install {{name}}"
       }
+    },
+    "errors": {
+      "load": "Failed to load plugin",
+      "reload": "Failed to reload plugin",
+      "remove": "Failed to remove plugin",
+      "unknownPermissions": "Unknown permissions: {{permissions}}"
     }
   },
   "updater": {
     "updateAvailable": "Update available",
     "clickToUpdate": "Click to update",
     "downloading": "Downloading... {{progress}}%",
-    "clickToRestart": "Click to restart"
+    "clickToRestart": "Click to restart",
+    "errors": {
+      "restart": "Failed to restart for update"
+    }
   },
   "flatpak": {
     "sandboxWarning": "You're running Nuclear in a Flatpak sandbox. Some features may not work correctly. If you experience issues, try the .deb or AppImage instead.",
@@ -407,6 +418,12 @@
       "noCandidatesFound": "Failed to find stream candidates",
       "allCandidatesFailed": "All stream candidates failed"
     }
+  },
+  "discord": {
+    "reconnected": "Reconnected to Discord"
+  },
+  "tracks": {
+    "filterPlaceholder": "Filter tracks"
   },
   "playerBar": {
     "noTrackPlaying": "No track playing",

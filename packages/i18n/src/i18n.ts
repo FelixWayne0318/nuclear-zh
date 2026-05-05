@@ -6,8 +6,11 @@ import en_US from './locales/en_US.json';
 import es_ES from './locales/es_ES.json';
 import fr_FR from './locales/fr_FR.json';
 import it_IT from './locales/it_IT.json';
+import ja_JP from './locales/ja_JP.json';
+import pl_PL from './locales/pl_PL.json';
 import pt_BR from './locales/pt_BR.json';
 import ru_RU from './locales/ru_RU.json';
+import zh_CN from './locales/zh_CN.json';
 
 export const resources = {
   en_US,
@@ -15,14 +18,52 @@ export const resources = {
   es_ES,
   fr_FR,
   it_IT,
+  ja_JP,
+  pl_PL,
   pt_BR,
   ru_RU,
+  zh_CN,
 } as const;
+
+const detectInitialLanguage = (): keyof typeof resources => {
+  if (typeof navigator === 'undefined') {
+    return 'zh_CN';
+  }
+  const lang = (navigator.language || 'zh_CN').toLowerCase();
+  if (lang.startsWith('zh')) {
+    return 'zh_CN';
+  }
+  if (lang.startsWith('ja')) {
+    return 'ja_JP';
+  }
+  if (lang.startsWith('de')) {
+    return 'de_DE';
+  }
+  if (lang.startsWith('es')) {
+    return 'es_ES';
+  }
+  if (lang.startsWith('fr')) {
+    return 'fr_FR';
+  }
+  if (lang.startsWith('it')) {
+    return 'it_IT';
+  }
+  if (lang.startsWith('pl')) {
+    return 'pl_PL';
+  }
+  if (lang.startsWith('pt')) {
+    return 'pt_BR';
+  }
+  if (lang.startsWith('ru')) {
+    return 'ru_RU';
+  }
+  return 'zh_CN';
+};
 
 i18n.use(initReactI18next).init({
   showSupportNotice: false, // disables console.log advertisement spam
   resources,
-  lng: 'en_US',
+  lng: detectInitialLanguage(),
   fallbackLng: 'en_US',
   defaultNS: 'common',
   ns: [

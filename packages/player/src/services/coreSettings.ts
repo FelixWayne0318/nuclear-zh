@@ -3,11 +3,14 @@ import type { SettingDefinition } from '@nuclearplayer/plugin-sdk';
 import { registerCoreSettings } from '../stores/settingsStore';
 
 const LANGUAGE_OPTIONS = [
+  { value: 'zh_CN', label: '简体中文' },
   { value: 'en_US', label: 'English' },
   { value: 'de_DE', label: 'Deutsch' },
   { value: 'es_ES', label: 'Español' },
   { value: 'fr_FR', label: 'Français' },
   { value: 'it_IT', label: 'Italiano' },
+  { value: 'ja_JP', label: '日本語' },
+  { value: 'pl_PL', label: 'Polski' },
   { value: 'pt_BR', label: 'Português (Brasil)' },
   { value: 'ru_RU', label: 'Русский' },
 ];
@@ -187,7 +190,7 @@ export const CORE_SETTINGS: SettingDefinition[] = [
     category: 'general',
     kind: 'enum',
     options: LANGUAGE_OPTIONS,
-    default: 'en_US',
+    default: 'zh_CN',
     widget: { type: 'select' },
   },
   {

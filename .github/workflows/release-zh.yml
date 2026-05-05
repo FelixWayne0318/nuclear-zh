@@ -1,0 +1,99 @@
+name: Release (中文版)
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "版本号（不带前缀，例如 1.35.0-zh.1）"
+        required: true
+        default: "1.35.0-zh.1"
+      draft:
+        description: "发布为草稿（推荐勾选，确认无误后再公开发布）"
+        type: boolean
+        default: true
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+env:
+  DO_NOT_TRACK: 1
+
+jobs:
+  release:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: "macos-latest"
+            args: "--target aarch64-apple-darwin"
+            arch: "arm64"
+          - platform: "macos-latest"
+            args: "--target x86_64-apple-darwin"
+            arch: "x64"
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+
+      - name: Get PNPM store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup PNPM cache
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+
+      - name: Cache cargo dependencies
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            packages/player/src-tauri/target/
+          key: ${{ runner.os }}-${{ matrix.arch }}-cargo-v1-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: release-zh-v${{ github.event.inputs.version }}
+          releaseName: "Nuclear 中文版 v${{ github.event.inputs.version }}"
+          releaseBody: |
+            基于 nukeop/nuclear 的中文汉化构建。
+
+            **macOS 安装提示**：未签名 / 未公证。首次打开若被 Gatekeeper 拦截，终端执行：
+            `xattr -cr "/Applications/Nuclear 中文版.app"`，然后重新打开即可。
+          releaseDraft: ${{ fromJSON(github.event.inputs.draft) }}
+          prerelease: false
+          args: ${{ matrix.args }}
